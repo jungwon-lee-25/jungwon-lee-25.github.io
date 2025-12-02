@@ -1,4 +1,8 @@
 /* 기본 초기화 */
+html {
+    scroll-behavior: smooth;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -78,19 +82,30 @@ h2 {
     padding-bottom: 10px;
 }
 
-/* 기술 스택 카드 디자인 */
+/* --- 1. 기술 스택 섹션 (가운데 정렬 + 자동 줄바꿈) --- */
 .skill-container {
-    display: flex;
-    justify-content: center;
+    display: flex;           /* Grid 대신 Flex 사용 (가운데 정렬 핵심) */
+    justify-content: center; /* 아이템들을 화면 정중앙으로 모음 */
+    flex-wrap: wrap;         /* 5개가 넘어가면 자동으로 다음 줄로 넘김 */
     gap: 20px;
-    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .skill-card {
     background-color: #333;
     padding: 20px;
     border-radius: 10px;
-    width: 200px;
+    width: 200px; /* 카드의 너비를 고정해서 깔끔하게 */
+    text-align: center;
+    transition: transform 0.2s;
+    /* Flexbox에서 크기 유지를 위한 설정 */
+    flex-shrink: 0; 
+}
+
+.skill-card:hover {
+    transform: translateY(-5px);
+    background-color: #3a3a3a;
 }
 
 .skill-card.coming-soon {
@@ -98,19 +113,159 @@ h2 {
     border: 2px dashed #666;
 }
 
-/* 3. 프로젝트 공사 중 디자인 */
-.construction-box {
-    border: 3px dashed #666;
-    padding: 50px;
-    border-radius: 20px;
-    max-width: 600px;
+/* --- 프로젝트 섹션 (Grid + 디자인) --- */
+.project-container {
+    display: grid !important;
+    /* 무조건 3개씩 균등하게 */
+    grid-template-columns: repeat(3, 1fr) !important; 
+    gap: 30px;
+    
+    max-width: 1200px;
     margin: 0 auto;
-    background-color: #222;
+    padding: 40px 20px;
 }
 
-.construction-box .icon {
-    font-size: 4rem;
+/* 개별 카드 디자인 */
+.project-card {
+    background-color: #2c2c2c; /* 카드 배경색 */
+    border-radius: 15px;       /* 둥근 모서리 */
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3); /* 그림자 */
+    text-align: left;
+    transition: transform 0.3s ease;
+    
+    width: 100% !important; 
+    display: flex;             /* 내용물 정렬을 위해 */
+    flex-direction: column;    /* 위에서 아래로 쌓이게 */
+}
+
+.project-card:hover {
+    transform: translateY(-7px); /* 마우스 올리면 둥실 뜸 */
+}
+
+/* 썸네일 이미지 영역 */
+.project-img {
+    height: 160px;
+    background-color: #444;    /* 이미지 없을 때 회색 배경 */
+    border-bottom: 1px solid #3d3d3d;
+}
+
+.project-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* 텍스트 내용 영역 */
+.project-info {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1; /* 높이를 꽉 채우도록 */
+}
+
+.project-info h3 {
+    margin: 0 0 10px 0;
+    font-size: 1.2rem;
+    color: #fff;
+    font-weight: bold;
+}
+
+/* 기술 스택 뱃지 (초록색 알약) */
+.tech-tags {
+    margin-bottom: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.tag {
+    background-color: #4cd137;
+    color: #000;
+    font-size: 0.7rem;
+    font-weight: 800;
+    padding: 4px 10px;
+    border-radius: 15px;
+}
+
+.project-info p {
+    font-size: 0.9rem;
+    color: #ccc;
+    line-height: 1.5;
     margin-bottom: 20px;
+    flex-grow: 1; /* 설명이 짧아도 버튼을 바닥으로 밀어냄 */
+}
+
+/* --- 버튼 영역 (3개 정렬 수정본) --- */
+.project-links {
+    display: flex;
+    gap: 6px;       /* 버튼 사이 간격을 좁게 (3개라 공간이 부족함) */
+    margin-top: auto;
+}
+
+.link-btn {
+    flex: 1;        /* 3개의 버튼이 공간을 똑같이 나눠가짐 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    padding: 10px 0;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 0.75rem; /* 3개라 글자가 길면 잘림 -> 글자 크기 축소 */
+    font-weight: 800;   /* 대신 굵게 해서 가독성 확보 */
+    transition: 0.2s;
+    white-space: nowrap; /* 줄바꿈 방지 */
+}
+
+.link-btn:hover {
+    transform: translateY(-2px);
+}
+
+/* 1. 데모 버튼 (흰색 배경) */
+.link-btn {
+    background-color: #fff;
+    color: #000;
+    border: 1px solid #fff;
+}
+.link-btn:hover {
+    background-color: #e0e0e0;
+}
+
+/* 2. 깃허브 버튼 (투명 + 흰색 테두리) */
+.link-btn.outline {
+    background-color: transparent;
+    border: 1px solid #666;
+    color: #ccc;
+}
+.link-btn.outline:hover {
+    border-color: #fff;
+    color: #fff;
+    background-color: rgba(255,255,255,0.1);
+}
+
+/* 3. 벨로그 버튼 (살짝 어두운 배경) */
+.link-btn.devlog {
+    background-color: #3a3a3a;
+    border: 1px solid #3a3a3a;
+    color: #4cd137; /* 벨로그 상징색(초록) 포인트 */
+}
+.link-btn.devlog:hover {
+    background-color: #444;
+    color: #fff;
+}
+
+.link-btn.text-only {
+    background-color: transparent;
+    color: #666;
+    pointer-events: none; /* 클릭 안 되게 */
+}
+
+/* --- 반응형 (모바일에서만 1줄로 변경) --- */
+@media (max-width: 768px) {
+    .project-container {
+        grid-template-columns: 1fr !important; /* 모바일은 1개씩 */
+    }
 }
 
 /* 4. 푸터 디자인 */
@@ -120,4 +275,34 @@ footer {
     background-color: #000;
     font-size: 0.9rem;
     color: #888;
+}
+
+/* --- 반응형 미디어 쿼리 (화면 크기에 따른 배치 조정) --- */
+
+/* 1. 태블릿 & 작은 노트북 화면 (1024px 이하) */
+@media (max-width: 1024px) {
+    .skill-container {
+        /* 5개 -> 3개로 줄임 (나머지는 다음 줄로) */
+        grid-template-columns: repeat(3, 1fr);
+    }
+    .project-container {
+        /* 3개 -> 2개로 줄임 */
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* 2. 모바일 화면 (768px 이하) */
+@media (max-width: 768px) {
+    .skill-container {
+        /* 모바일에서는 2개씩 보기 좋게 */
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .project-container {
+        /* 모바일에서는 1개씩 꽉 차게 */
+        grid-template-columns: repeat(1, 1fr);
+    }
+    
+    /* 제목 크기 등도 모바일에선 조금 줄여주면 좋습니다 */
+    h1 { font-size: 2rem; }
+    h2 { font-size: 1.5rem; }
 }
